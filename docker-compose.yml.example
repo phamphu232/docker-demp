@@ -1,9 +1,11 @@
-version: '3.8'
-
 networks:
   net1:
     driver: bridge
     internal: false
+    ipam:
+      config:
+        - subnet: 10.10.0.0/24
+          gateway: 10.10.0.1
 
 services:
   nginx:
@@ -25,7 +27,8 @@ services:
       - ./www:/var/www
       - ./log/nginx:/var/log/nginx
     networks:
-      - net1
+      net1:
+        ipv4_address: 10.10.0.11
 
   php:
     build:
@@ -46,7 +49,8 @@ services:
       - "9000"
     working_dir: /var/www
     networks:
-      - net1
+      net1:
+        ipv4_address: 10.10.0.21
 
   mariadb:
     image: mariadb:11.1.2
@@ -58,3 +62,6 @@ services:
       - "3306:3306"
     volumes:
       - ./mysql:/var/lib/mysql
+    networks:
+      net1:
+        ipv4_address: 10.10.0.31
