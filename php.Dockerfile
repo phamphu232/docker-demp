@@ -8,8 +8,8 @@ RUN docker-php-ext-enable gd mysqli opcache zip
 ARG USER_ID=1000
 ARG GROUP_ID=1000
 RUN deluser www-data 2>/dev/null || true
-RUN addgroup -g ${GROUP_ID} www-data \
-    && adduser -u ${USER_ID} -G www-data -h /home/www-data -s /sbin/nologin -D www-data
+RUN addgroup --gid ${GROUP_ID} www-data \
+    && useradd --uid ${USER_ID} --gid www-data -d /var/www-data -s /usr/sbin/nologin -M www-data
 USER www-data
 EXPOSE 9000
 CMD ["php-fpm"]
