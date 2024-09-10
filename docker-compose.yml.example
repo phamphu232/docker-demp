@@ -14,8 +14,8 @@ services:
       context: .
       dockerfile: ./nginx.Dockerfile
       args:
-        UID: ${UID:-1000}
-        GID: ${UID:-1000}
+        USER_ID: ${USER_ID:-1000}
+        GROUP_ID: ${GROUP_ID:-1000}
     container_name: nginx
     restart: unless-stopped
     ports:
@@ -35,11 +35,11 @@ services:
       context: .
       dockerfile: ./php.Dockerfile
       args:
-        UID: ${UID:-1000}
-        GID: ${UID:-1000}
+        USER_ID: ${USER_ID:-1000}
+        GROUP_ID: ${GROUP_ID:-1000}
     container_name: php
     restart: unless-stopped
-    user: '${UID:-1000}:${GID:-1000}'
+    user: '${USER_ID:-1000}:${GROUP_ID:-1000}'
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ./php/php.ini:/usr/local/etc/php/php.ini:ro
